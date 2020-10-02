@@ -1,27 +1,3 @@
-/**
-    
-    1.Starting with a 1-indexed array of zeros and a list of operations
-    2. for each operation add a value to each of the array element between two given indices
-    3. Once all operations have been performed, return the maximum value in the array.
-
-    Function Description
-
-        Complete the function arrayManipulation in the editor below.
-
-        arrayManipulation has the following parameters:
-
-        int n - the number of elements in the array
-        int queries[q][3] - a two dimensional array of queries where each queries[i] contains three integers, a, b, and k.
-         
-        Returns
-            int - the maximum value in the resultant array
-            Input Format
-
-            The first line contains two space-separated integers  and , the size of the array and the number of operations.
-            Each of the next  lines contains three space-separated integers ,  and , the left index, right index and summand.
- */
-
-
 
 
 let testArr = [
@@ -30,55 +6,14 @@ let testArr = [
      [6,9,1] //  summand
 ];
 
-   /**
-    * 
-        1. create new array with the number of indices provided by user
-        2. use the lenght of the multidimensial array for loop iterations
-        3. Add numbers to the indices in the new array up to the index of the highest index
-
-        a [0]
-        b [1]
-        k [2]
-    */
-  
+let testArr2 = [
+    [1,2,100],
+    [2,5,100],
+    [3,4,100]
+];
 
 
-
-
-
-function arrayManipulation(n, queries) {
-
-    let newArr = createArray(n); // This creates the array with the number of indices
-    let largestNumber = 0;
-
-
-    for (let i = 0; i < queries.length; i++) {
-     
-
-        let startingPosition = queries[i][0] - 1; // start here
-        let stoppingPosition = queries[i][1] - 1; // end here
-        let summand = queries[i][2]; // add this
-
-        for(let j = 0; j <= newArr.length; j++) {
-            let index = j;
-   
-           if(index >= startingPosition && index <= stoppingPosition){
-               newArr.splice(j, 1, newArr[j] + summand)
-               if(newArr[j] > largestNumber) {
-                   largestNumber = newArr[j]
-               }
-           }     
-        }
-        
-        return largestNumber;
-    }
-
-};
-
-
-
-
-
+// creates the new array with based on the given number of indicies
 function createArray(numberOfIndices){
 
     if(!numberOfIndices) {
@@ -101,17 +36,43 @@ function createArray(numberOfIndices){
 
 };
 
-
-
-
-arrayManipulation(10, testArr);
-
+ 
 
 
 
 
 
 
+function manipulateArray(n, queries) {
+    let arr = createArray(n);
+    let largestNumber = 0;
+
+    for(let i = 0; i < queries.length; i++) {
+        
+        console.log(i)
+        for(let j = 0; j < arr.length; j++) {
+            let index = j + 1;
+            
+            let start = queries[i][0];
+            let stop = queries[i][1];
+            let sumToAdd = queries[i][2];
+
+            //  if the current index is greater than or equal to  the start, or less than or equal to stop add sum 
+            if(index >= start && index <= stop){
+                arr.splice(j, 1, arr[j] + sumToAdd)
+            }
+
+            // check if the newly added number is now the largest
+            if(arr[j] > largestNumber) {
+                largestNumber = arr[j];
+            }
+
+        }
+    
+    };
+
+    return largestNumber;
+};
 
 
-
+manipulateArray(10, testArr);
